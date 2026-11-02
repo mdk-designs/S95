@@ -204,3 +204,6 @@ export const immersiveExamples: Record<
     modelCredit: "Sample model: “Glam Velvet Sofa” © 2021 Wayfair, LLC, CC BY 4.0, via Khronos glTF Sample Assets.",
   },
 };
+
+/** Placeholder 360°/AR content used for any project without its own capture. Replace per project in `immersiveExamples`. */
+export const defaultImmersive = immersiveExamples["Mövenpick Resort Al Marjan Island"];

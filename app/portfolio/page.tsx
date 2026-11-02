@@ -5,7 +5,7 @@ import { Reveal } from "@/components/Reveal";
 import { Words } from "@/components/Words";
 import { pageMeta } from "@/lib/seo";
 import { ImmersiveViewer } from "@/components/ImmersiveViewer";
-import { immersiveExamples, projects } from "@/lib/site";
+import { defaultImmersive, immersiveExamples, projects } from "@/lib/site";
 
 export const metadata = pageMeta({
   title: "Portfolio",
@@ -31,7 +31,7 @@ export default function PortfolioPage() {
 
       <div className="stack">
         {projects.map((p, i) => (
-          <Bleed key={p.title} image={p.image} panel align="end" labelledBy={`p-${i}`}>
+          <Bleed key={p.title} image={p.image} panel className="bleed--flow" align="end" labelledBy={`p-${i}`}>
               <p className="eyebrow">
                 <span>
                   <span aria-hidden="true">{String(i + 1).padStart(2, "0")} · </span>
@@ -49,11 +49,9 @@ export default function PortfolioPage() {
                 <dt className="sr-only">Scope</dt>
                 <dd style={{ margin: "0.75rem 0 0" }}>{p.scope}</dd>
               </dl>
-              {immersiveExamples[p.title] && (
-                <div className="actions">
-                  <ImmersiveViewer title={p.title} data={immersiveExamples[p.title]} />
-                </div>
-              )}
+              <div className="actions">
+                <ImmersiveViewer title={p.title} data={immersiveExamples[p.title] ?? defaultImmersive} />
+              </div>
           </Bleed>
         ))}
       </div>

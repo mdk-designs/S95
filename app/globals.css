@@ -1120,6 +1120,14 @@ ul {
   }
 }
 
+/* Portfolio: each project is exactly one viewport and scrolls normally (no sticky overlap) */
+.bleed--panel.bleed--flow {
+  position: relative;
+  top: auto;
+  height: 100svh;
+  min-height: 34rem;
+}
+
 /* ── Expanding image window ── */
 .expand {
   position: relative;
