@@ -12,13 +12,16 @@ import { useEffect } from "react";
  */
 
 const CONFIG = {
-  trails: 20, // ribbons in the bundle
-  size: 50, // nodes per ribbon
+  trails: 14, // ribbons in the bundle
+  size: 22, // nodes per ribbon: shorter = a tighter, shorter wake
   friction: 0.5,
-  dampening: 0.25,
-  tension: 0.98,
+  dampening: 0.2,
+  tension: 0.95,
   spring: 0.45,
-  idleMs: 2600, // stop drawing this long after the pointer rests
+  jitter: 0.02, // how much each ribbon's spring differs: smaller = ribbons stay bundled (less spread)
+  lineWidth: 8, // wide soft strokes (softened further by the CSS blur) instead of hairlines
+  alpha: 0.018, // very low per-stroke opacity; the overlap builds a gentle, subtle body
+  idleMs: 1800, // stop drawing this long after the pointer rests
 };
 
 class Node {
@@ -48,7 +51,7 @@ class Ribbon {
   private friction: number;
 
   constructor(index: number, start: { x: number; y: number }) {
-    this.spring = CONFIG.spring + (index / CONFIG.trails) * 0.025 + 0.1 * Math.random() - 0.05;
+    this.spring = CONFIG.spring + (index / CONFIG.trails) * 0.01 + 2 * CONFIG.jitter * Math.random() - CONFIG.jitter;
     this.friction = CONFIG.friction + 0.01 * Math.random() - 0.005;
     for (let i = 0; i < CONFIG.size; i++) {
       const n = new Node();
@@ -140,8 +143,10 @@ export default function useCanvasCursor() {
       ctx.globalCompositeOperation = "source-over";
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       ctx.globalCompositeOperation = "lighter";
-      ctx.strokeStyle = `hsla(${Math.round(hue.next())}, 45%, 86%, 0.07)`;
-      ctx.lineWidth = 1.25;
+      ctx.strokeStyle = `hsla(${Math.round(hue.next())}, 45%, 86%, ${CONFIG.alpha})`;
+      ctx.lineWidth = CONFIG.lineWidth;
+      ctx.lineCap = "round";
+      ctx.lineJoin = "round";
       for (const r of ribbons) {
         r.update(pos);
         r.draw(ctx);
