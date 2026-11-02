@@ -69,7 +69,6 @@ export function ImmersiveViewer({ title, data }: { title: string; data: Immersiv
         keyboard: false, // enabled only while the viewer itself has focus (below), so Tab/arrow keys elsewhere behave normally
         loadingTxt: "Loading…",
       });
-      (window as unknown as { __psv?: unknown }).__psv = viewer;
       viewer.addEventListener("ready", () => !cancelled && setStatus("360° tour ready. Drag, swipe, or use the arrow keys to look around."), { once: true });
       container.addEventListener("focusin", () => viewer?.startKeyboardControl());
       container.addEventListener("focusout", () => viewer?.stopKeyboardControl());
