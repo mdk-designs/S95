@@ -1448,7 +1448,6 @@ html.lenis body {
   pointer-events: none;
   /* white ribbons inverted against the page: dark on light sections, light over photos */
   mix-blend-mode: difference;
-  filter: blur(2.5px); /* soft edges: reads as a gentle glow, not a hairline */
 }
 @media (hover: none), (pointer: coarse), (prefers-reduced-motion: reduce), (forced-colors: active) {
   .canvas-cursor {
